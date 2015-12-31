@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour {
 
 	public Slider healthSlider;
 	public Text livesText;
+	private bool isDeath = false;
 
 	// Use this for initialization
 	void Start () {
@@ -39,53 +40,55 @@ public class PlayerController : MonoBehaviour {
 	void Update () {
 		healthSlider.value = health;
 
-		// Keyboard controller FIRE
-		if (Input.GetKeyDown (KeyCode.Space)) {
-			InvokeRepeating ("Fire", 0.000001f, firingRate);
+		if(!isDeath) {
+			// Keyboard controller FIRE
+			if (Input.GetKeyDown (KeyCode.Space)) {
+				InvokeRepeating ("Fire", 0.000001f, firingRate);
+			}
+			if (Input.GetKeyUp (KeyCode.Space)) {
+				CancelInvoke ("Fire");
+			}
+
+			// Command "XBOX" controller FIRE
+			if (Input.GetKeyDown (KeyCode.Joystick1Button0)) {
+				InvokeRepeating ("Fire", 0.000001f, firingRate);
+			}
+			if (Input.GetKeyUp (KeyCode.Joystick1Button0)) {
+				CancelInvoke ("Fire");
+			}
+
+			// Smoothed movement of player ship getting Vertical and Horizontal values from Input Parameters
+			movementVectorAxis.y = Input.GetAxis ("Vertical") * moveSpeed * Time.deltaTime;
+			movementVectorAxis.x = Input.GetAxis ("Horizontal") * moveSpeed * Time.deltaTime;
+			transform.position += movementVectorAxis;
+
+			// Giving smoothed Y (horizontal) rotation when player ship goes left and right
+			float tiltAroundY = Input.GetAxis("Horizontal") * tiltAngle;
+			Quaternion target = Quaternion.Euler(transform.rotation.x, -tiltAroundY, transform.rotation.z);
+			transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * smooth);
+
+			// Restricting the player's position to gamespace (Starting with RestrictPositionShip() method) 
+			float newX = Mathf.Clamp (transform.position.x, xmin, xmax);
+			float newY = Mathf.Clamp (transform.position.y, ymin, ymax);
+			transform.position = new Vector3 (newX, newY, transform.position.z);
+
+			//		// Arrow keys from keyboard
+			//		if (Input.GetKey (KeyCode.LeftArrow)) {			
+			////			transform.position += new Vector3 (-moveSpeed * Time.deltaTime, 0, 0);
+			//			transform.position += Vector3.left * moveSpeed * Time.deltaTime;
+			//		} else if (Input.GetKey(KeyCode.RightArrow)) {			
+			////			transform.position += new Vector3 (moveSpeed * Time.deltaTime, 0, 0);
+			//			transform.position += Vector3.right * moveSpeed * Time.deltaTime;
+			//		}
+			//
+			//		if (Input.GetKey (KeyCode.UpArrow)) {			
+			////			transform.position += new Vector3 (0, moveSpeed * Time.deltaTime, 0);
+			//			transform.position += Vector3.up * moveSpeed * Time.deltaTime;	
+			//		} else if (Input.GetKey (KeyCode.DownArrow)) {			
+			////			transform.position += new Vector3 (0, -moveSpeed * Time.deltaTime, 0);
+			//			transform.position += Vector3.down * moveSpeed * Time.deltaTime;
+			//		}
 		}
-		if (Input.GetKeyUp (KeyCode.Space)) {
-			CancelInvoke ("Fire");
-		}
-
-		// Command "XBOX" controller FIRE
-		if (Input.GetKeyDown (KeyCode.Joystick1Button0)) {
-			InvokeRepeating ("Fire", 0.000001f, firingRate);
-		}
-		if (Input.GetKeyUp (KeyCode.Joystick1Button0)) {
-			CancelInvoke ("Fire");
-		}
-
-		// Smoothed movement of player ship getting Vertical and Horizontal values from Input Parameters
-		movementVectorAxis.y = Input.GetAxis ("Vertical") * moveSpeed * Time.deltaTime;
-		movementVectorAxis.x = Input.GetAxis ("Horizontal") * moveSpeed * Time.deltaTime;
-		transform.position += movementVectorAxis;
-
-		// Giving smoothed Y (horizontal) rotation when player ship goes left and right
-		float tiltAroundY = Input.GetAxis("Horizontal") * tiltAngle;
-		Quaternion target = Quaternion.Euler(transform.rotation.x, -tiltAroundY, transform.rotation.z);
-		transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * smooth);
-
-		// Restricting the player's position to gamespace (Starting with RestrictPositionShip() method) 
-		float newX = Mathf.Clamp (transform.position.x, xmin, xmax);
-		float newY = Mathf.Clamp (transform.position.y, ymin, ymax);
-		transform.position = new Vector3 (newX, newY, transform.position.z);
-
-		//		// Arrow keys from keyboard
-		//		if (Input.GetKey (KeyCode.LeftArrow)) {			
-		////			transform.position += new Vector3 (-moveSpeed * Time.deltaTime, 0, 0);
-		//			transform.position += Vector3.left * moveSpeed * Time.deltaTime;
-		//		} else if (Input.GetKey(KeyCode.RightArrow)) {			
-		////			transform.position += new Vector3 (moveSpeed * Time.deltaTime, 0, 0);
-		//			transform.position += Vector3.right * moveSpeed * Time.deltaTime;
-		//		}
-		//
-		//		if (Input.GetKey (KeyCode.UpArrow)) {			
-		////			transform.position += new Vector3 (0, moveSpeed * Time.deltaTime, 0);
-		//			transform.position += Vector3.up * moveSpeed * Time.deltaTime;	
-		//		} else if (Input.GetKey (KeyCode.DownArrow)) {			
-		////			transform.position += new Vector3 (0, -moveSpeed * Time.deltaTime, 0);
-		//			transform.position += Vector3.down * moveSpeed * Time.deltaTime;
-		//		}
 	}
 
 	void RestrictPositionShip ()
@@ -102,10 +105,12 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Fire(){
-		Vector3 offset = new Vector3 (0,1,0);
-		GameObject beam = Instantiate (projectile, transform.position + offset, Quaternion.identity) as GameObject;	
-		beam.GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, projectileSpeed, 0);
-		AudioSource.PlayClipAtPoint(fireSound, transform.position);
+		if (!isDeath) {
+			Vector3 offset = new Vector3 (0, 1, 0);
+			GameObject beam = Instantiate (projectile, transform.position + offset, Quaternion.identity) as GameObject;	
+			beam.GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, projectileSpeed, 0);
+			AudioSource.PlayClipAtPoint (fireSound, transform.position);
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D collider){
@@ -144,6 +149,7 @@ public class PlayerController : MonoBehaviour {
 			man.LoadLevel ("Start Menu");
 			Destroy(gameObject);
 		} else {	
+			isDeath = true;
 			StartCoroutine(WaitRefreshLive(5.0f));
 		}
 	}
@@ -159,7 +165,7 @@ public class PlayerController : MonoBehaviour {
 		gameObject.GetComponent<MeshRenderer> ().enabled = true;
 		gameObject.GetComponent<PolygonCollider2D> ().enabled = true;
 //		gameObject.GetComponent<PlayerController> ().enabled = true;
-
+		isDeath = false;
 		shieldRespawn.SetActive (true);
 		yield return new WaitForSeconds (waitTime);
 		shieldRespawn.SetActive (false);

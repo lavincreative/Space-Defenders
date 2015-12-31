@@ -25,6 +25,9 @@ public class EnemyTYPE01Behaviour : MonoBehaviour {
 
 	public float health = 150f;
 	public int scoreValue = 150;
+	public GameObject destroyParticles;
+	public GameObject sparkParticles;
+	public float offsetSparks = 0.5f;
 
 	public GameObject projectile;
 	public float projectileSpeed = 10f;
@@ -111,9 +114,11 @@ public class EnemyTYPE01Behaviour : MonoBehaviour {
 		Debug.Log (collider);
 		Projectile missile = collider.gameObject.GetComponent<Projectile>();
 		if(missile){
+			Instantiate (sparkParticles, new Vector3(transform.position.x,transform.position.y - offsetSparks,0), Quaternion.Euler (90, 0, 0));
 			health -= missile.GetDamage();
 			missile.Hit();
-			if (health <= 0) {
+			if (health <= 0) {				
+				Instantiate (destroyParticles, transform.position, Quaternion.identity);
 				Die();
 			}
 		}
