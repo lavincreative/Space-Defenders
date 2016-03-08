@@ -14,7 +14,7 @@ public class EnemyTYPE01Behaviour : MonoBehaviour {
 	float maxX = 6.1f;
 	float minX = -6.1f;
 	float maxY = 4.2f;
-	float minY = -4.2f;
+	float minY = -1.0f;
 
 	private float tChange = 0f; // force new direction in the first Update
 	private float randomX;
@@ -36,12 +36,14 @@ public class EnemyTYPE01Behaviour : MonoBehaviour {
 	public AudioClip fireSound;
 	public AudioClip deathSound;
 
-//	private ScoreKeeper scoreKeeper;
+	public GameObject[] Drops;
+
+	private ScoreKeeper scoreKeeper;
 
 	// Use this for initialization
 	void Start () {
 		RestrictPositionShip ();
-//		scoreKeeper = GameObject.Find("Score").GetComponent<ScoreKeeper>();
+		scoreKeeper = GameObject.Find("Score").GetComponent<ScoreKeeper>();
 	}
 
 	void RestrictPositionShip ()
@@ -124,9 +126,16 @@ public class EnemyTYPE01Behaviour : MonoBehaviour {
 		}
 	}
 
+	public float randomDrop;
+
 	void Die(){
 		AudioSource.PlayClipAtPoint(deathSound, transform.position);
-		//		scoreKeeper.Score(scoreValue);
+		scoreKeeper.Score(scoreValue);
+
+		if (Random.value > randomDrop) {
+			Instantiate (Drops [0], new Vector3 (transform.position.x, transform.position.y, 0), Quaternion.identity);
+		}
+
 		Destroy(gameObject);
 	}
 }
