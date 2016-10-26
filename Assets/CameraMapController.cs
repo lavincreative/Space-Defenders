@@ -56,6 +56,12 @@ public class CameraMapController : MonoBehaviour {
 				fadeOutImage.SetActive (true);
 				levelManager.LoadLevel ("Mission" + currentPos);
 			}
+
+			if (Input.GetKeyDown (KeyCode.Escape) || Input.GetKeyDown (KeyCode.Joystick1Button1)) {
+				Debug.Log ("Esc pressed");
+				fadeOutImage.SetActive (true);
+				levelManager.LoadLevel ("Start Menu");
+			}
 		}
 	}
 
