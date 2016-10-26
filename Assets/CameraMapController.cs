@@ -75,6 +75,7 @@ public class CameraMapController : MonoBehaviour {
 			transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, i);
 			// Other kind of camera movement
 //			transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, speedRotation * Time.deltaTime);
+			// Testing message
 			i += Time.deltaTime * rate;
 			thisTransform.position = Vector3.Lerp(startPos, endPos, i);
 			yield return null;
