@@ -36,7 +36,7 @@ El juego dispone de un único nivel infinito, con enemigos que van apareciendo s
 
 **Como extender Space Defender**
 
-Hay muchas extensiones posibles para Space Defender. En particular, pensamos que las siguientes áreas serian interesantes de desarrollar.
+Hay muchas extensiones posibles para Space Defender. En particular, pienso que las siguientes áreas, entre otras, serian interesantes de desarrollar.
 
 -	Múltiples tipos de enemigos podrían ser adjuntados, y daría lugar a una progresión de juego mejorado si los enemigos son cada vez más difíciles de superar.
 -	Múltiples tipos de proyectiles dejarían al jugador decidir entre que armas usar, o permitiría una mayor diversidad en los ataques enemigos entrantes.
