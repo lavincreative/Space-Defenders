@@ -15,7 +15,7 @@ El juego dispone de un único nivel infinito, con enemigos que van apareciendo s
 
 | Space-Defenders Intro  |
 | ------------- |
-| [![Space-Defenders Video](http://img.youtube.com/vi/iRORrBmn2do/0.jpg)](http://www.youtube.com/watch?v=iRORrBmn2do)  |
+| [![Space-Defenders Video](http://img.youtube.com/vi/iRORrBmn2do/0.jpg "Ver en YouTube")](http://www.youtube.com/watch?v=iRORrBmn2do)  |
 
 **Características principales:**
 -	La nave jugador será capaz de moverse izquierda, derecha, arriba y abajo en el espacio del juego.
@@ -37,6 +37,8 @@ El juego dispone de un único nivel infinito, con enemigos que van apareciendo s
 -	Música de fondo también se ejecutará durante el juego.
 -	El jugador tendrá 3 vidas, y es capaz de absorber 3 disparos enemigos antes de perecer.
 -	Enemigos pueden requerir más de un disparo para ser eliminados.
+
+[![Seguir en Trello](https://maxcdn.icons8.com/Color/PNG/48/Logos/trello-48.png "Seguir en Trello")](https://trello.com/b/DXvULSWV/space-defenders)
 
 **Como extender Space Defender**
 
