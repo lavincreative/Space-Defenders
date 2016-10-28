@@ -13,6 +13,10 @@ Space Defender es un moderno clon 2D de Space Invaders, con la peculiaridad de u
 
 El juego dispone de un único nivel infinito, con enemigos que van apareciendo sobre la escena perpetuamente según el jugador los va destruyendo. Cada enemigo destruido le hará ganar al jugador una determinada puntuación, con el objetivo de alcanzar la máxima puntuación antes de la destrucción inevitable del jugador por un enemigo. Los enemigos también dispararán proyectiles, que el jugador tendrá que evitar.
 
+| Space-Defenders Intro  |
+| ------------- |
+| [![Space-Defenders Video](http://img.youtube.com/vi/iRORrBmn2do/0.jpg)](http://www.youtube.com/watch?v=iRORrBmn2do)  |
+
 **Características principales:**
 -	La nave jugador será capaz de moverse izquierda, derecha, arriba y abajo en el espacio del juego.
 -	Acciones del jugador se verán reflejadas en la nave del jugador.
@@ -44,4 +48,7 @@ Hay muchas extensiones posibles para Space Defender. En particular, pienso que l
 -	Potenciadores serían una gran adición a Space Defender. Estos podrían habilitar al jugador a tener un continuo destello de energía, o propagación de fuego al disparar, o tener invencibilidad bajo un corto periodo de tiempo.
 -	Soltar botines por los enemigos (potenciadores / bonus de vida / etc…) harían el juego más interesante. En particular, si los enemigos sueltan bonus de regeneración de vida, el juego podría entonces ser jugado por más tiempo.
 
-[Visita mi web](http://labincreators.com)
+[Visita mi web](http://labincreators.com "Álvaro Lavín Amorós - Code & Design")
+
+![alt text][image]
+[image]:  http://2.bp.blogspot.com/-shp63VtRaT8/Ur7ueo3BzAI/AAAAAAAARyk/dBCrmVQQ41U/s1600/44388037.jpg "UBI Patch"
